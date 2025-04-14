@@ -55,6 +55,7 @@ for:
       - Scenario: 2016
         Services: mssql2016
         main_instance: localhost\SQL2016
+  -
     matrix:
       only:
         - image: Visual Studio 2022
