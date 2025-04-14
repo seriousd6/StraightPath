@@ -14,7 +14,7 @@ cache:
   - C:\Program Files\WindowsPowerShell\Modules\Pester -> appveyor.yml
   - C:\Program Files\WindowsPowerShell\Modules\dbatools.library -> dbatools.psd1
 
-Environment:
+environment:
   matrix:
     - scenario: 2008R2
       main_instance: localhost\SQL2008R2SP2
