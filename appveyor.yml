@@ -1,29 +1,28 @@
 ﻿
-version: 1.0.{build}
+version: 0.0.{build}
 
-image: Visual Studio 2019
+image: Previous Visual Studio 2015
+configuration: "Debug"
+
+build_script:
+ - ps: Set-Service wuauserv -StartupType Manual #otherwise, choco command exits with code 1058
+
+cache:
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - C:\Program Files\WindowsPowerShell\Modules\PSScriptAnalyzer -> appveyor.yml
+  - C:\Program Files\WindowsPowerShell\Modules\Pester -> appveyor.yml
+  - C:\Program Files\WindowsPowerShell\Modules\dbatools.library -> dbatools.psd1
 
 environment:
   matrix:
-    - SQL_SERVER_VERSION: 2012
-    - SQL_SERVER_VERSION: 2014
-    - SQL_SERVER_VERSION: 2016
-    - SQL_SERVER_VERSION: 2017
-    - SQL_SERVER_VERSION: 2019
-
-install:
-  - ps: Install-SQLServer -Version $env:SQL_SERVER_VERSION
-
-build_script:
-  - cmd: |
-     echo Building with SQL Server %SQL_SERVER_VERSION%
-     msbuild MySolution.sln /p:Configuration=Release
-
-test_script:
-  - cmd: |
-     echo Running tests with SQL Server %SQL_SERVER_VERSION%
-     vstest.console.exe MyTests.dll
-
-artifacts:
-  - path: '**\*.dll'
-    name: MyProject
+    - scenario: 2008R2
+      main_instance: localhost\SQL2008R2SP2
+    - scenario: 2016
+      main_instance: localhost\SQL2016
+    - scenario: service_restarts
+      main_instance: localhost\SQL2017,localhost\SQL2016
+    - scenario: 2016_2017
+      main_instance: localhost\SQL2017,localhost\SQL2016
+    - scenario: default
+      main_instance: localhost\SQL2008R2SP2,localhost\SQL2016
