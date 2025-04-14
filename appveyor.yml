@@ -51,7 +51,6 @@ for:
         - Scenario: 2019
           Services: mssql2019
           main_instance: localhost\SQL2019
-      init:
-        - net start MSSQL$SQL2019
+
 
 
