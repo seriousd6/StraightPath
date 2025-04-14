@@ -1,8 +1,6 @@
 ﻿# See http://www.appveyor.com/docs/appveyor-yml for many more options
 version: 0.0.{build}
 
-branches: 
-  Only: Development
 
 skip_branch_with_pr: true
 
