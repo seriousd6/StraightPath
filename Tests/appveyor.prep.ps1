@@ -27,10 +27,16 @@ if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\PSScriptAnalyzer\
     Install-Module -Name PSScriptAnalyzer -Force -SkipPublisherCheck -MaximumVersion 1.18.2 | Out-Null
 }
 
+#Get dbatools
+Write-Host -Object "appveyor.prep: Install dbatools.library" -ForegroundColor DarkGreen
+if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\dbatools.library')) {
+    Install-Module -Name dbatools -Force | Out-Null
+}
+
 #Get dbatools.library
 Write-Host -Object "appveyor.prep: Install dbatools.library" -ForegroundColor DarkGreen
 if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\dbatools.library')) {
-    Install-Module -Name dbatools.library -Force -AllowPrerelease | Out-Null
+    Install-Module -Name dbatools.library -Force | Out-Null
 }
 
 #Get Pester (to run tests) - choco isn't working onall scenarios, weird
