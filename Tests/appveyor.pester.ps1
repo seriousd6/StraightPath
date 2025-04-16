@@ -43,6 +43,7 @@ param (
 # Move to the project root
 Set-Location $ModuleBase
 # required to calculate coverage
+<#
 $global:dbatools_dotsourcemodule = $true
 $dbatools_serialimport = $true
 
@@ -53,6 +54,7 @@ Import-Module "$ModuleBase\dbatools.psm1" -Force
 
 Update-TypeData -AppendPath "$ModuleBase\xml\dbatools.types.ps1xml" -ErrorAction SilentlyContinue # ( this should already be loaded by dbatools.psd1 )
 Start-Sleep 5
+#>
 
 function Split-ArrayInParts($array, [int]$parts) {
     #splits an array in "equal" parts
@@ -66,9 +68,10 @@ function Split-ArrayInParts($array, [int]$parts) {
     $rtn
 }
 
+<# commenting this out breaks line 74's comment (.*)
 function Get-CoverageIndications($Path, $ModuleBase) {
     # takes a test file path and figures out what to analyze for coverage (i.e. dependencies)
-    $CBHRex = [regex]'(?smi)<#(.*)#>'
+    $CBHRex = [regex]'(?smi)'
     $everything = (Get-Module dbatools).ExportedCommands.Values
     $everyfunction = $everything.Name
     $funcs = @()
@@ -159,6 +162,7 @@ function Get-CodecovReport($Results, $ModuleBase) {
     }
     $newreport
 }
+    #>
 
 function Get-PesterTestVersion($testFilePath) {
     $testFileContent = Get-Content -Path $testFilePath -Raw

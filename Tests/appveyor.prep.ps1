@@ -11,11 +11,11 @@ if ($AllScenarioTests.Count -eq 0) {
     return
 }
 
-
+<#
 $sw = [system.diagnostics.stopwatch]::startNew()
 Write-Host -Object "appveyor.prep: Cloning lab materials"  -ForegroundColor DarkGreen
 git clone -q --branch=master --depth=1 https://github.com/dataplat/appveyor-lab.git C:\github\appveyor-lab
-
+#>
 #Get codecov (to upload coverage results)
 Write-Host -Object "appveyor.prep: Install codecov" -ForegroundColor DarkGreen
 choco install codecov | Out-Null
@@ -51,9 +51,9 @@ if (-not(Test-Path 'C:\Users\appveyor\Documents\DbatoolsExport')) {
 
 
 Write-Host -Object "appveyor.prep: Trust SQL Server Cert (now required)" -ForegroundColor DarkGreen
-Import-Module dbatools.library
-Import-Module C:\github\dbatools\dbatools.psd1
-Set-DbatoolsConfig -FullName sql.connection.trustcert -Value $true -Register
-Set-DbatoolsConfig -FullName sql.connection.encrypt -Value $false -Register
+#Import-Module dbatools.library
+#Import-Module C:\github\dbatools\dbatools.psd1
+#Set-DbatoolsConfig -FullName sql.connection.trustcert -Value $true -Register
+#Set-DbatoolsConfig -FullName sql.connection.encrypt -Value $false -Register
 $sw.Stop()
 Update-AppveyorTest -Name "appveyor.prep" -Framework NUnit -FileName "appveyor.prep.ps1" -Outcome Passed -Duration $sw.ElapsedMilliseconds
