@@ -30,7 +30,7 @@ if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\PSScriptAnalyzer\
 
 #Get dbatools
 Write-Host -Object "appveyor.prep: Install dbatools" -ForegroundColor DarkGreen
-if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\dbatools.library')) {
+if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\dbatools')) {
     Install-Module -Name dbatools -Force | Out-Null
 
 }
