@@ -32,6 +32,7 @@ if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\PSScriptAnalyzer\
 Write-Host -Object "appveyor.prep: Install dbatools" -ForegroundColor DarkGreen
 if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\dbatools.library')) {
     Install-Module -Name dbatools -Force | Out-Null
+
 }
 
 #Get dbatools.library
@@ -41,10 +42,6 @@ if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\dbatools.library'
 }
 
 #Get Pester (to run tests) - choco isn't working onall scenarios, weird
-Write-Host -Object "appveyor.prep: Install Pester4" -ForegroundColor DarkGreen
-if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\Pester\4.4.2')) {
-    Install-Module -Name Pester -Force -SkipPublisherCheck -MaximumVersion 4.4.2 | Out-Null
-}
 Write-Host -Object "appveyor.prep: Install Pester5" -ForegroundColor DarkGreen
 if (-not(Test-Path 'C:\Program Files\WindowsPowerShell\Modules\Pester\5.6.1')) {
     Install-Module -Name Pester -Force -SkipPublisherCheck -RequiredVersion 5.6.1 | Out-Null
@@ -58,8 +55,8 @@ if (-not(Test-Path 'C:\Users\appveyor\Documents\DbatoolsExport')) {
 
 
 Write-Host -Object "appveyor.prep: Trust SQL Server Cert (now required)" -ForegroundColor DarkGreen
-#Import-Module dbatools.library
-#Import-Module C:\github\dbatools\dbatools.psd1
+Import-Module dbatools.library
+Import-Module dbatools
 Set-DbatoolsConfig -FullName sql.connection.trustcert -Value $true -Register
 Set-DbatoolsConfig -FullName sql.connection.encrypt -Value $false -Register
 $sw.Stop()
