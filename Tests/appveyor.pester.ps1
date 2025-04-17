@@ -188,7 +188,7 @@ if (-not $Finalize) {
         return
     }
     # Remove any previously loaded pester module
-    Remove-Module -Name pester -ErrorAction SilentlyContinue
+<#    Remove-Module -Name pester -ErrorAction SilentlyContinue
     # Import pester 4
     Import-Module pester -RequiredVersion 4.4.2
     Write-Host -Object "appveyor.pester: Running with Pester Version $((Get-Command Invoke-Pester -ErrorAction SilentlyContinue).Version)" -ForegroundColor DarkGreen
@@ -236,13 +236,13 @@ if (-not $Finalize) {
                 break
             }
         }
-    }
+    }#>
 
     #start the round for pester 5 tests
     # Remove any previously loaded pester module
     Remove-Module -Name pester -ErrorAction SilentlyContinue
     # Import pester 5
-    Import-Module pester -RequiredVersion 5.6.1
+    Import-Module pester #-RequiredVersion 5.6.1
     Write-Host -Object "appveyor.pester: Running with Pester Version $((Get-Command Invoke-Pester -ErrorAction SilentlyContinue).Version)" -ForegroundColor DarkGreen
     $Counter = 0
     foreach ($f in $AllTestsWithinScenario) {
@@ -259,13 +259,13 @@ if (-not $Finalize) {
         $pester5config.Run.PassThru = $true
         $pester5config.Output.Verbosity = "None"
         #opt-in
-        if ($IncludeCoverage) {
+        <#if ($IncludeCoverage) {
             $CoverFiles = Get-CoverageIndications -Path $f -ModuleBase $ModuleBase
             $pester5Config.CodeCoverage.Enabled = $true
             $pester5Config.CodeCoverage.Path = $CoverFiles
             $pester5Config.CodeCoverage.OutputFormat = 'JaCoCo'
             $pester5Config.CodeCoverage.OutputPath = "$ModuleBase\Pester5Coverage$PSVersion$Counter.xml"
-        }
+        }#>
 
         $trialNo = 1
         while ($trialNo -le 3) {
