@@ -1,8 +1,5 @@
 Add-AppveyorTest -Name "appveyor.post" -Framework NUnit -FileName "appveyor.post.ps1" -Outcome Running
 $sw = [system.diagnostics.stopwatch]::startNew()
-Write-Host -Object "appveyor.post: Sending coverage data (pester 4)" -ForeGroundColor DarkGreen
-Push-AppveyorArtifact PesterResultsCoverage.json -FileName "PesterResultsCoverage"
-codecov -f PesterResultsCoverage.json --flag "pester4_$($env:SCENARIO.ToLowerInvariant())" | Out-Null
 
 Write-Host -Object "appveyor.post: Sending coverage data (pester 5)" -ForeGroundColor DarkGreen
 $ProjectRoot = $env:APPVEYOR_BUILD_FOLDER

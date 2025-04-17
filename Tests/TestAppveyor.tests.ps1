@@ -1,7 +1,9 @@
-Add-AppveyorTest -Name "POCTest" -Framework NUnit -FileName "testappveyor.tests.ps1" -Outcome Running
+#Requires -Module @{ ModuleName="Pester"; ModuleVersion="5.0"}
 
+$CommandName = $MyInvocation.MyCommand.Name.Replace(".Tests.ps1", "")
+Write-Host -Object "Running $PSCommandPath" -ForegroundColor Cyan
+$global:TestConfig = Get-TestConfig
 
-Write-Host -Object "Test: $PSCommandPath" -ForeGroundColor DarkGreen
 Import-Module dbatools
 import-Module dbatools.library
 
@@ -27,4 +29,3 @@ write-host $result
 $result = Invoke-DbaQuery -SqlInstance $TestConfig.instance6 -SqlCredential $Credential -Query 'SELECT @@servername,@@version' #| Should -Not -BeNullOrEmpty
 write-host $result
 
-pdate-AppveyorTest -Name "POCTest" -Framework NUnit -FileName "testappveyor.tests.ps1" -Outcome Passed -Duration $sw.
